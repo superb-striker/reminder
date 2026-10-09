@@ -1,0 +1,17 @@
+[Unit]
+Description=Desktop reminder notifications
+PartOf=graphical-session.target
+After=graphical-session.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/reminder/env
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/share/omarchy/bin
+ExecStart=%h/.local/bin/reminder-bin watch --interval 10
+Restart=always
+RestartSec=10
+TimeoutStopSec=5
+
+[Install]
+WantedBy=graphical-session.target
