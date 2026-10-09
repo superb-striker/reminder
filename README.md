@@ -3,7 +3,7 @@
 A small, self-hosted reminder system. One SQLite file, one Rust binary, one VPS — a phone notification and a desktop notification, both driven by a server that stays the single source of truth even when your laptop is asleep, closed, or off.
 
 [![Rust](https://img.shields.io/badge/rust-edition%202021-orange)](https://www.rust-lang.org)
-[![Tests](https://img.shields.io/badge/tests-61%20passing-brightgreen)](#testing)
+[![Tests](https://img.shields.io/badge/tests-63%20passing-brightgreen)](#testing)
 [![Database](https://img.shields.io/badge/database-SQLite%20(WAL)-003b57)](https://www.sqlite.org)
 [![Status](https://img.shields.io/badge/status-personal%20project-blueviolet)](#project-status--roadmap)
 [![License](https://img.shields.io/badge/license-unlicensed-lightgrey)](#license)
@@ -39,7 +39,7 @@ The payoff is a reminder system that:
 - **DST-safe scheduling** — the next fire time is resolved fresh against a real IANA timezone on every tick, not precomputed, so clock changes never silently shift a reminder by an hour.
 - **Crash-safe, idempotent firing** — "has this already fired today" is a database constraint, not application logic, so a restart or an overlapping scheduler tick can never double-fire a reminder.
 - **Push notifications via [ntfy](https://ntfy.sh)** — works from a headless server with no GUI; delivery is retried independently of the reminder itself, so a dead ntfy topic never loses reminders, only their push notification.
-- **Local desktop notifications** — `reminder watch` polls the server and fires `omarchy reminder` locally, so an offline laptop simply catches up next time it's online instead of missing anything.
+- **Automatic desktop notifications** — a systemd user service polls the server and shows Omarchy notifications when reminders are due. It starts at desktop login and catches up on pending occurrences after reconnecting.
 - **Full CLI** — `add` / `list` / `edit` / `delete` / `complete`, all backed by the same HTTP API a phone or another machine would use.
 - **Interactive TUI** (`reminder tui`, built on [ratatui](https://ratatui.rs)) — browse, add, edit, delete, complete, and toggle reminders without leaving the terminal.
 - **One SQLite file** — no external database service, no connection pool tuning, WAL mode for safe concurrent access from the API, scheduler, and notifier in the same process.
@@ -48,7 +48,7 @@ The payoff is a reminder system that:
 
 ## System architecture
 
-![Architecture diagram: an Oracle Cloud VM running reminder serve (HTTP API, scheduler, notify loop) over a single SQLite file, behind nginx for TLS; a phone receives push notifications via ntfy; a laptop polls the API with the CLI, TUI, and watch, and shows local notifications via omarchy reminder](docs/architecture.svg)
+![Architecture diagram: an Oracle Cloud VM running reminder serve (HTTP API, scheduler, notify loop) over a single SQLite file, behind nginx for TLS; a phone receives push notifications via ntfy; a laptop polls the API with the CLI, TUI, and watch, and shows local notifications via omarchy-reminder](docs/architecture.svg)
 
 The server is one Rust process (`reminder serve`) running three concurrent loops against one SQLite connection:
 
@@ -60,7 +60,7 @@ The server is one Rust process (`reminder serve`) running three concurrent loops
 
 Two things follow directly from that split:
 
-1. **The laptop is a client, not a scheduler.** `reminder watch` polls `GET /occurrences/pending-laptop` and fires `omarchy reminder` locally, then acks it. If the laptop is off for a week, nothing is lost — the occurrences just sit as "pending" until it asks again.
+1. **The laptop is a client, not a scheduler.** `reminder watch` polls `GET /occurrences/pending-laptop` and shows Omarchy notifications locally, then acks it. If the laptop is off for a week, nothing is lost — the occurrences just sit as "pending" until it asks again.
 2. **The phone is a push target, not a dependency.** If ntfy is unreachable, the reminder still fired, is still recorded, and still shows up in `reminder list` / the TUI. Only the push notification is delayed, and it's retried automatically once ntfy comes back.
 
 See [`docs/architecture.svg`](docs/architecture.svg) for the diagram source.
@@ -78,8 +78,8 @@ The guiding rule: **push logic out of anything that touches a terminal or a sock
 | `notify/mod.rs` | 3 | the retry loop's success/failure/give-up-after-N-attempts behavior, against a fake backend |
 | `notify/ntfy.rs` | 4 | the real `NtfyBackend` HTTP request shape, against a throwaway local `axum` server (title header, auth header, non-ASCII fallback, error handling) |
 | `client/tui.rs` | 15 | form validation/parsing, schedule formatting, edit-form prefill — everything except the actual rendering |
-| `client/watch.rs` | 4 | poll → notify → ack, against a fake local server, including the "local notify failed, stays pending" path |
-| **Total** | **61** | `cargo test` |
+| `client/watch.rs` | 6 | poll → notify → ack, against a fake local server, including the "local notify failed, stays pending" path |
+| **Total** | **63** | `cargo test` |
 
 Nothing here uses a mocking library. Where a real dependency (SQLite, an HTTP server) was needed for a faithful test, it's a real one — an in-memory SQLite database, or a throwaway `axum` server bound to `127.0.0.1:0` — rather than a simulation of one. The `client/tui.rs` event loop and `main.rs`'s `serve` wiring are the main things *not* covered by `cargo test`, because there's very little logic left in them once the parsing and query logic is factored out; those were instead verified by driving the real compiled binary (including through a pseudo-terminal for the TUI) during development.
 
@@ -129,6 +129,42 @@ reminder list
 reminder tui
 ```
 
+## Automatic Omarchy notifications
+
+After building, install the desktop service once:
+
+```sh
+mkdir -p ~/.local/bin ~/.config/reminder ~/.config/systemd/user
+install -m 755 target/release/reminder ~/.local/bin/reminder-bin
+# ~/.config/reminder/env must contain REMINDER_SERVER_URL and REMINDER_TOKEN
+# as KEY=value lines (without `export`). Keep this file private:
+chmod 600 ~/.config/reminder/env
+install -m 644 deploy/reminder-watch.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now reminder-watch.service
+```
+
+The service starts at graphical login, restarts after failures, and needs no
+terminal or manually running `reminder watch`. Inspect it with
+`systemctl --user status reminder-watch` or
+`journalctl --user -u reminder-watch -n 30`.
+
+The server resolves the scheduled date, time, and repeat days in `REMINDER_TZ`;
+use `Asia/Kolkata` for IST. A reminder created at 14:00 for 14:45 becomes due at
+14:45. Desktop delivery follows within roughly 40 seconds while connected
+(30-second scheduler + 10-second desktop poll). Pending occurrences are shown
+after waking/reconnecting. This does not create a second Omarchy countdown or
+populate `omarchy reminder show`; it uses the same desktop notification system.
+The laptop needs network access to receive new occurrences.
+
+Phone pushes use ntfy high priority, requesting sound, vibration, and a pop-over.
+Android notification settings still control whether those alerts are allowed.
+If a message is present in ntfy but silent, inspect the topic's notification
+settings and Android's high-priority notification channel. If it only appears
+when opening the app, check ntfy instant delivery and battery restrictions.
+See [ntfy phone setup](https://docs.ntfy.sh/subscribe/phone/) and
+[priority behavior](https://docs.ntfy.sh/publish/#message-priority).
+
 ## CLI reference
 
 ```
@@ -141,7 +177,7 @@ reminder <COMMAND>
 | `add` | Add a new reminder. |
 | `list` | List all reminders. |
 | `tui` | Interactive terminal UI for browsing and managing reminders. |
-| `watch` | Poll for reminders that fired and show them locally via `omarchy reminder`. Run this on your laptop/desktop. |
+| `watch` | Poll for reminders that fired and show them locally via Omarchy desktop notifications. Run this on your laptop/desktop. |
 | `edit` | Edit an existing reminder. Only the flags you pass are changed. |
 | `delete` | Delete a reminder. |
 | `complete` | Mark a reminder's most recently fired occurrence as done. |
@@ -164,7 +200,7 @@ All configuration is via environment variables — there's no config file (yet; 
 | `REMINDER_NTFY_TOPIC` | `serve` | *(unset = push disabled)* | Your ntfy topic name. |
 | `REMINDER_NTFY_SERVER` | `serve` | `https://ntfy.sh` | ntfy server base URL (for self-hosting). |
 | `REMINDER_NTFY_TOKEN` | `serve` | *(unset)* | Bearer token for a self-hosted, access-controlled ntfy instance. |
-| `REMINDER_OMARCHY_CMD` | `watch` | `omarchy` | Command run as `<cmd> reminder <title>` for local notifications. |
+| `REMINDER_OMARCHY_CMD` | `watch` | *(unset)* | Optional custom command run as `<cmd> <title>`; defaults to immediate Omarchy notifications. |
 
 ## Project status / roadmap
 
