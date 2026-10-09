@@ -1,6 +1,6 @@
 //! `reminder watch` -- runs on the laptop, not the server. Polls
 //! `GET /occurrences/pending-laptop` on a fixed interval, and for
-//! anything it finds, runs `omarchy reminder <title>` locally, then
+//! anything it finds, shows an Omarchy desktop notification locally, then
 //! acks it back to the server so it isn't shown again.
 //!
 //! # Why this is pull, not push
@@ -39,31 +39,44 @@ pub trait LocalNotifier: Send + Sync {
     async fn notify(&self, title: &str) -> anyhow::Result<()>;
 }
 
-/// Shells out to `omarchy reminder <title>` (or whatever command
-/// `REMINDER_OMARCHY_CMD` names, for testing or for a differently
-/// named binary).
+/// Shows an immediate notification using Omarchy's notification command.
+/// The server has already resolved the reminder's date/time and marked it due;
+/// starting another countdown here would delay delivery a second time.
+/// An optional custom command receives just the title as one argument.
 pub struct OmarchyNotifier {
-    command: String,
+    command: Option<String>,
 }
 
 impl OmarchyNotifier {
-    pub fn new(command: String) -> Self {
+    pub fn new(command: Option<String>) -> Self {
         OmarchyNotifier { command }
+    }
+
+    fn process(&self, title: &str) -> tokio::process::Command {
+        let command = self.command.as_deref().unwrap_or("omarchy-notification-send");
+        let mut process = tokio::process::Command::new(command);
+        if self.command.is_some() {
+            process.arg(title);
+        } else {
+            // Prefix the headline so even a title like "--exec" is text.
+            process.args(["-u", "normal", "-g", "󰢌"])
+                .arg(format!("Reminder: {title}"))
+                .arg("It's time!");
+        }
+        process
     }
 }
 
 impl LocalNotifier for OmarchyNotifier {
     async fn notify(&self, title: &str) -> anyhow::Result<()> {
-        let status = tokio::process::Command::new(&self.command)
-            .arg("reminder")
-            .arg(title)
-            .status()
-            .await
-            .with_context(|| {
-                format!("failed to run `{} reminder` -- is it installed and on PATH?", self.command)
-            })?;
+        let command = self.command.as_deref().unwrap_or("omarchy-notification-send");
+        let mut process = self.process(title);
+        let status = tokio::time::timeout(
+            Duration::from_secs(15), process.kill_on_drop(true).status()
+        ).await.context("local notification command timed out")?
+            .with_context(|| format!("failed to run `{command}` -- is it installed and on PATH?"))?;
         if !status.success() {
-            anyhow::bail!("`{} reminder` exited with {status}", self.command);
+            anyhow::bail!("`{command}` exited with {status}");
         }
         Ok(())
     }
@@ -72,6 +85,7 @@ impl LocalNotifier for OmarchyNotifier {
 /// Poll forever, on a fixed interval, until the process is killed.
 /// Never returns under normal operation.
 pub async fn run<N: LocalNotifier>(client: ApiClient, notifier: N, interval_secs: u64) -> anyhow::Result<()> {
+    anyhow::ensure!(interval_secs > 0, "poll interval must be at least one second");
     println!(
         "watching for reminders on this machine (polling every {interval_secs}s), Ctrl-C to stop"
     );
@@ -234,9 +248,26 @@ mod tests {
         assert_eq!(poll_once(&client, &notifier).await.unwrap(), 0);
     }
 
+    #[test]
+    fn due_reminder_uses_immediate_notification_and_keeps_title_as_text() {
+        let notifier = OmarchyNotifier::new(None);
+        let process = notifier.process("--exec touch /tmp/should-not-exist");
+        let command = process.as_std();
+        assert_eq!(command.get_program(), "omarchy-notification-send");
+        let args: Vec<_> = command.get_args().map(|s| s.to_str().unwrap()).collect();
+        assert_eq!(args, ["-u", "normal", "-g", "󰢌", "Reminder: --exec touch /tmp/should-not-exist", "It's time!"]);
+    }
+
+    #[tokio::test]
+    async fn zero_interval_is_rejected_without_panicking() {
+        let client = ApiClient::new("http://127.0.0.1:1".into(), "test".into());
+        assert!(run(client, OmarchyNotifier::new(None), 0).await.unwrap_err()
+            .to_string().contains("at least one second"));
+    }
+
     #[tokio::test]
     async fn omarchy_notifier_reports_a_clear_error_when_command_is_missing() {
-        let notifier = OmarchyNotifier::new("definitely-not-a-real-command-xyz".into());
+        let notifier = OmarchyNotifier::new(Some("definitely-not-a-real-command-xyz".into()));
         let err = notifier.notify("Study Go").await.unwrap_err();
         assert!(err.to_string().contains("definitely-not-a-real-command-xyz"));
     }
