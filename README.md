@@ -5,17 +5,19 @@ A small, self-hosted reminder system. One SQLite file, one Rust binary, one VPS 
 [![Rust](https://img.shields.io/badge/rust-edition%202021-orange)](https://www.rust-lang.org)
 [![Tests](https://img.shields.io/badge/tests-63%20passing-brightgreen)](#testing)
 [![Database](https://img.shields.io/badge/database-SQLite%20(WAL)-003b57)](https://www.sqlite.org)
-[![Status](https://img.shields.io/badge/status-personal%20project-blueviolet)](#project-status--roadmap)
-[![License](https://img.shields.io/badge/license-unlicensed-lightgrey)](#license)
+[![Status](https://img.shields.io/badge/status-deployed-22c55e)](#project-status--roadmap)
+[![License](https://img.shields.io/badge/license-MIT-blue)](#license)
 
 ## Table of contents
 
 - [Why this project matters](#why-this-project-matters)
 - [Features](#features)
+- [Current deployment](#current-deployment)
 - [System architecture](#system-architecture)
 - [Testing](#testing)
 - [Design decisions](#design-decisions)
 - [Getting started](#getting-started)
+- [Automatic Omarchy notifications](#automatic-omarchy-notifications)
 - [CLI reference](#cli-reference)
 - [Configuration](#configuration)
 - [Project status / roadmap](#project-status--roadmap)
@@ -28,6 +30,7 @@ Most reminder apps are either a subscription, a cloud account you don't control,
 That last part is the actual constraint. It would be easy to reach for Kubernetes, Postgres, Redis, a message queue, and a microservice per concern — and just as easy to end up with a system nobody, including its author, wants to touch six months later. This project deliberately avoids all of that. SQLite is the entire database. One Rust binary is both the CLI and the server. One VPS is the entire deployment target. Every architectural choice in this README exists to keep the system small enough that reading the source is still a reasonable way to understand it.
 
 The payoff is a reminder system that:
+
 - keeps running correctly whether your laptop is open, asleep, or in a drawer somewhere,
 - degrades gracefully instead of catastrophically when a piece of it (ntfy, your laptop) is unavailable,
 - has no recurring cost beyond a free-tier VPS, and
@@ -46,22 +49,41 @@ The payoff is a reminder system that:
 - **Bearer-token authentication** — one long-lived token, checked in constant time, no OAuth machinery for a single-user server.
 - **Plain HTTP + reverse proxy** — the binary doesn't embed a TLS stack; put nginx or Caddy in front for HTTPS, and the Rust side stays free of certificate-lifecycle code.
 
+## Current deployment
+
+The system is deployed and phone and desktop delivery have been verified.
+
+| Component | Current setup |
+|---|---|
+| Oracle Cloud VM | **VM.Standard.E2.1.Micro**, x86_64 |
+| VM image | **Canonical Ubuntu 22.04** |
+| Server | `/opt/reminder/reminder serve`, managed by `reminder.service` |
+| API transport | HTTPS reverse proxy → `127.0.0.1:8080`; bearer-token authentication |
+| Storage | `/opt/reminder/reminder.db`, SQLite in WAL mode |
+| Schedule timezone | `Asia/Kolkata` (IST) |
+| Phone | Redmi 12 5G, subscribed through the ntfy app to the configured ntfy.sh topic |
+| Desktop | Omarchy; `reminder-watch.service` starts automatically at graphical login |
+
+See [the deployment guide](deploy/README.md) for VM setup and the
+[desktop setup](#automatic-omarchy-notifications) below for the user service.
+
 ## System architecture
 
-![Architecture diagram: an Oracle Cloud VM running reminder serve (HTTP API, scheduler, notify loop) over a single SQLite file, behind nginx for TLS; a phone receives push notifications via ntfy; a laptop polls the API with the CLI, TUI, and watch, and shows local notifications via omarchy-reminder](docs/architecture.svg)
+![Dark architecture diagram showing the Omarchy CLI and automatic desktop daemon connecting over HTTPS to an Oracle VM running Canonical Ubuntu 22.04 on VM.Standard.E2.1.Micro. The Rust API, scheduler, and notification worker share SQLite. The notification worker sends high-priority pushes through ntfy.sh to a Redmi 12 5G.](docs/architecture.svg)
 
-The server is one Rust process (`reminder serve`) running three concurrent loops against one SQLite connection:
+The server is one Rust process (`reminder serve`) with an HTTP API, scheduler, and notification worker sharing one SQLite connection. The desktop daemon runs separately on the laptop:
 
 | Component | What it does | Cadence |
 |---|---|---|
 | HTTP API (`axum`) | CRUD on reminders, `complete`, and the `/occurrences/*` endpoints the laptop poller uses — all behind bearer-token auth | request-driven |
 | Scheduler | Asks "what's due right now?" and records an occurrence for anything that fires | every 30s |
-| Notify loop | Pushes any occurrence not yet delivered via ntfy, independent of when it fired | every 30s |
+| Notify loop | Sends pending occurrences to ntfy with `Priority: high`; retries up to 10 attempts per occurrence | every 30s |
+| Desktop daemon (on the laptop) | Fetches pending occurrences, displays them with `omarchy-notification-send`, then acknowledges delivery | every 10s |
 
 Two things follow directly from that split:
 
-1. **The laptop is a client, not a scheduler.** `reminder watch` polls `GET /occurrences/pending-laptop` and shows Omarchy notifications locally, then acks it. If the laptop is off for a week, nothing is lost — the occurrences just sit as "pending" until it asks again.
-2. **The phone is a push target, not a dependency.** If ntfy is unreachable, the reminder still fired, is still recorded, and still shows up in `reminder list` / the TUI. Only the push notification is delayed, and it's retried automatically once ntfy comes back.
+1. **Automatic desktop delivery.** The systemd user service runs `reminder watch --interval 10` in the background. It polls `GET /occurrences/pending-laptop`, displays each due reminder, and acknowledges successful delivery. Occurrences recorded while the laptop is off remain pending until it reconnects. A failed local notification is retried.
+2. **Independent phone delivery.** The server records an occurrence before trying ntfy. Push failures do not block scheduling or desktop delivery; retries run every 30 seconds, up to 10 attempts. A successful ntfy response means the message was accepted, not that Android displayed or sounded it.
 
 See [`docs/architecture.svg`](docs/architecture.svg) for the diagram source.
 
@@ -76,9 +98,9 @@ The guiding rule: **push logic out of anything that touches a terminal or a sock
 | `scheduler.rs` | 8 | `is_due()` against specific dates (one-shot, repeat, end date, occurrence cap) and a real DST transition via `chrono-tz` |
 | `server/mod.rs` | 3 | the hand-rolled constant-time token comparison |
 | `notify/mod.rs` | 3 | the retry loop's success/failure/give-up-after-N-attempts behavior, against a fake backend |
-| `notify/ntfy.rs` | 4 | the real `NtfyBackend` HTTP request shape, against a throwaway local `axum` server (title header, auth header, non-ASCII fallback, error handling) |
+| `notify/ntfy.rs` | 4 | the real `NtfyBackend` HTTP request shape, against a throwaway local `axum` server (title, high priority, auth, non-ASCII fallback, error handling) |
 | `client/tui.rs` | 15 | form validation/parsing, schedule formatting, edit-form prefill — everything except the actual rendering |
-| `client/watch.rs` | 6 | poll → notify → ack, against a fake local server, including the "local notify failed, stays pending" path |
+| `client/watch.rs` | 6 | poll → notify → ack, against a fake local server, including failed notifications staying pending, safe command arguments, and rejecting a zero poll interval |
 | **Total** | **63** | `cargo test` |
 
 Nothing here uses a mocking library. Where a real dependency (SQLite, an HTTP server) was needed for a faithful test, it's a real one — an in-memory SQLite database, or a throwaway `axum` server bound to `127.0.0.1:0` — rather than a simulation of one. The `client/tui.rs` event loop and `main.rs`'s `serve` wiring are the main things *not* covered by `cargo test`, because there's very little logic left in them once the parsing and query logic is factored out; those were instead verified by driving the real compiled binary (including through a pseudo-terminal for the TUI) during development.
@@ -108,13 +130,14 @@ Each of these was a real fork in the road, not a default. The rule applied throu
 git clone <this-repo>
 cd reminder
 cargo build --release
+export PATH="$PWD/target/release:$PATH"
 ```
 
 Run the server (this is what runs on your VPS):
 
 ```sh
 export REMINDER_TOKEN=$(openssl rand -hex 32)   # generate once, reuse everywhere below
-export REMINDER_TZ=America/New_York              # your IANA timezone
+export REMINDER_TZ=Asia/Kolkata                # current deployment uses IST
 reminder serve
 ```
 
@@ -122,7 +145,7 @@ Then, as a client (your laptop, or the same machine while testing):
 
 ```sh
 export REMINDER_SERVER_URL=http://127.0.0.1:8080
-export REMINDER_TOKEN=<same token as above>
+export REMINDER_TOKEN="your-shared-server-token"
 
 reminder add "Study Go" --time 18:00 --repeat mon,wed,fri
 reminder list
@@ -131,17 +154,27 @@ reminder tui
 
 ## Automatic Omarchy notifications
 
-After building, install the desktop service once:
+The current laptop already has this enabled. For another Omarchy machine,
+build the binary, create `~/.config/reminder/env` with these values, then install
+the service once:
+
+```ini
+REMINDER_SERVER_URL=https://your-reminder-server.example
+REMINDER_TOKEN=your-shared-server-token
+```
 
 ```sh
 mkdir -p ~/.local/bin ~/.config/reminder ~/.config/systemd/user
-install -m 755 target/release/reminder ~/.local/bin/reminder-bin
+install -m 755 target/release/reminder ~/.local/bin/reminder-bin.new
+mv ~/.local/bin/reminder-bin.new ~/.local/bin/reminder-bin
 # ~/.config/reminder/env must contain REMINDER_SERVER_URL and REMINDER_TOKEN
 # as KEY=value lines (without `export`). Keep this file private:
 chmod 600 ~/.config/reminder/env
 install -m 644 deploy/reminder-watch.service ~/.config/systemd/user/
 systemctl --user daemon-reload
 systemctl --user enable --now reminder-watch.service
+# When updating an already-running installation:
+systemctl --user restart reminder-watch.service
 ```
 
 The service starts at graphical login, restarts after failures, and needs no
@@ -156,6 +189,10 @@ use `Asia/Kolkata` for IST. A reminder created at 14:00 for 14:45 becomes due at
 after waking/reconnecting. This does not create a second Omarchy countdown or
 populate `omarchy reminder show`; it uses the same desktop notification system.
 The laptop needs network access to receive new occurrences.
+
+The server must run at or after the scheduled time on the scheduled day. It
+catches up later on that day, but does not backfill earlier dates after downtime.
+Desktop catch-up applies to occurrences the server has already recorded.
 
 Phone pushes use ntfy high priority, requesting sound, vibration, and a pop-over.
 Android notification settings still control whether those alerts are allowed.
@@ -177,7 +214,7 @@ reminder <COMMAND>
 | `add` | Add a new reminder. |
 | `list` | List all reminders. |
 | `tui` | Interactive terminal UI for browsing and managing reminders. |
-| `watch` | Poll for reminders that fired and show them locally via Omarchy desktop notifications. Run this on your laptop/desktop. |
+| `watch` | Desktop delivery loop; runs automatically through `reminder-watch.service`. Manual invocation is useful for debugging. Default poll interval: 10 seconds. |
 | `edit` | Edit an existing reminder. Only the flags you pass are changed. |
 | `delete` | Delete a reminder. |
 | `complete` | Mark a reminder's most recently fired occurrence as done. |
@@ -188,7 +225,11 @@ Run `reminder <command> --help` for a command's flags.
 
 ## Configuration
 
-All configuration is via environment variables — there's no config file (yet; see [roadmap](#project-status--roadmap)).
+The application reads environment variables. The server service loads
+`/opt/reminder/reminder.env`; the desktop service loads `~/.config/reminder/env`.
+Use `KEY=value` lines without `export`, keep token files private (`chmod 600`),
+and restart the relevant service after editing. Standalone CLI commands need
+the same variables exported in their shell or loaded by a wrapper.
 
 | Variable | Used by | Default | Purpose |
 |---|---|---|---|
@@ -204,13 +245,22 @@ All configuration is via environment variables — there's no config file (yet; 
 
 ## Project status / roadmap
 
-This is being built in phases; the server, CLI, TUI, ntfy push, and laptop `watch` loop are done and tested. Still open:
+Implemented and deployed:
 
-- [ ] Deploy to an actual Oracle Cloud Always Free VM (systemd unit, automatic restart, backups)
-- [ ] HTTPS via nginx/Caddy + Let's Encrypt in front of `reminder serve`
-- [ ] A config file, as an alternative to environment variables
+- [x] Oracle VM running Canonical Ubuntu 22.04 on VM.Standard.E2.1.Micro
+- [x] Server managed by systemd, with startup and restart handling
+- [x] HTTPS access to the authenticated API
+- [x] One-shot and recurring schedules, CLI, and TUI
+- [x] High-priority ntfy phone notifications, verified on Redmi 12 5G
+- [x] Automatic Omarchy desktop daemon, verified with a scheduled reminder
+- [x] 63 automated tests passing in the last validation run
+
+Remaining work:
+
+- [ ] Verify automated backup scheduling and restore recovery (a [backup script](deploy/backup.sh) is provided)
+- [ ] Application-managed configuration file, as an alternative to environment variables
 - [ ] Shell completion, import/export
 
 ## License
 
-No license has been chosen yet — this started as a personal project. If you'd like to use or fork it, open an issue, or add an MIT/Apache-2.0 `LICENSE` file before treating it as available for reuse.
+Licensed under the [MIT License](LICENSE).

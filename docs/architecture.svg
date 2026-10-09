@@ -1,113 +1,138 @@
-<svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo3NWZkOWFiNC01MGQ2LTQ2ZDUtYmNjYS0yN2ExYjFkODQ0YjEAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaCmQEhVURf084BshYfRJNREAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo3NzQ1NThlNi00Mzg3LTQyMjItODg5MC04ZGY4OGQ1ODBlZGJscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNostxoWJ3jdJUIkTKlZ8xulwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg/GwSBaaWnqfxzbYHCCYm4Y+tnLiZoSCoF3O0V3hO4Y+kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaL9ehLVATRtJzu8JaVWGJ/UAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCByT2/Cn5V89uRkrlyozmSPMiUDf57wFca/iqAAgf0MmGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjEZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjc1ZmQ5YWI0LTUwZDYtNDZkNS1iY2NhLTI3YTFiMWQ4NDRiMS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjU5NzNiYjJiLTk2ZGYtNDJhZi04MWI5LWEyYjYxOGVhZDZmMnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCD8bBIFppaep/HNtgcIJibhj62cuJmhIKgXc7RXeE7hj6JjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFgg5HeUwNpUmseECnzfhoSBUSM5cEA3Oo5khHZ2p1SOrNeiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggICEelvfsYeq7DEEIWGdT/NfUlRDEuxUyex7oHWqENYN0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQPV03H+X4lSfm3dlE8+RA60bF8NQZXwlrZMCzeqESCMKnF5R1Cn3bpY003C75/ktf9wYPMvJfxkPQ9PaC3OQt8I=</c2pa:manifest></metadata>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="930" viewBox="0 0 1400 930" role="img" aria-labelledby="title desc">
+  <title id="title">reminder — deployed architecture</title>
+  <desc id="desc">An Omarchy desktop connects over HTTPS to an Oracle VM using Canonical Ubuntu 22.04 on VM.Standard.E2.1.Micro. The server API, 30-second scheduler, and 30-second notification worker share SQLite. The worker sends high-priority messages through ntfy.sh to a Redmi 12 5G. A systemd desktop daemon starts at graphical login, polls every 10 seconds, displays due notifications, and acknowledges delivery.</desc>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
-    </marker>
+    <linearGradient id="bg" x2="1" y2="1">
+      <stop stop-color="#101b30"/>
+      <stop offset="1" stop-color="#080e1a"/>
+    </linearGradient>
+    <linearGradient id="cloud" x2="0" y2="1">
+      <stop stop-color="#1b223c"/>
+      <stop offset="1" stop-color="#111a2b"/>
+    </linearGradient>
+    <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#6bc9fa" stroke-width="1.6"/></marker>
+    <marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 9 5 1 9" fill="none" stroke="#f6bf69" stroke-width="1.6"/></marker>
+    <marker id="mint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#60cbb5" stroke-width="1.6"/></marker>
+    <style>
+      text { font-family: Inter, 'Segoe UI', Arial, sans-serif; }
+      .heading { fill: #f0f5ff; font-size: 24px; font-weight: 650; }
+      .label { fill: #e6edf8; font-size: 18px; font-weight: 600; }
+      .body { fill: #aebed5; font-size: 16px; }
+      .small { fill: #aebed5; font-size: 14px; }
+      .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+      .mono { font-family: 'DejaVu Sans Mono', monospace; font-size: 14px; fill: #dae6f8; }
+      .wire { fill: none; stroke-width: 2; stroke-linejoin: round; }
+    </style>
   </defs>
 
-  <rect x="0" y="0" width="1000" height="620" fill="#ffffff"/>
+  <rect width="1400" height="930" rx="24" fill="url(#bg)"/>
+  <path d="M40 131H1360" stroke="#29374e"/>
+  <text x="40" y="47" class="eyebrow" fill="#82a9dd">PERSONAL REMINDER SYSTEM</text>
+  <text x="40" y="91" fill="#f0f5ff" font-size="38" font-weight="700">One schedule. Both devices.</text>
+  <rect x="1130" y="47" width="230" height="38" rx="19" fill="#13352f" stroke="#27594b"/>
+  <circle cx="1152" cy="66" r="4" fill="#73e1ba"/>
+  <text x="1166" y="72" fill="#a4efd1" font-size="14" font-weight="600">DEPLOYED + VERIFIED</text>
 
-  <text x="500" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">reminder — architecture</text>
-  <text x="500" y="56" text-anchor="middle" font-size="12.5" fill="#64748b">The server is the source of truth. Phone and laptop are clients / notification endpoints, not schedulers.</text>
+  <!-- Desktop: user interaction and automatic delivery share the API. -->
+  <rect x="40" y="170" width="320" height="620" rx="20" fill="#111e31" stroke="#304862"/>
+  <text x="64" y="207" class="eyebrow" fill="#6bc9fa">01 / DESKTOP</text>
+  <text x="64" y="240" class="heading">Omarchy laptop</text>
+  <rect x="64" y="270" width="272" height="100" rx="12" fill="#172a41" stroke="#35516d"/>
+  <text x="84" y="300" class="label">CLI + terminal UI</text>
+  <text x="84" y="327" class="body">Add, edit, complete reminders</text>
+  <text x="84" y="352" class="small">HTTPS · bearer-token authentication</text>
 
-  <!-- ===================== VPS outer container ===================== -->
-  <rect x="260" y="90" width="480" height="460" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
-  <text x="500" y="115" text-anchor="middle" font-size="13.5" font-weight="700" fill="#334155">Oracle Cloud VM (Always Free ARM) — plain HTTP</text>
+  <rect x="64" y="420" width="272" height="170" rx="12" fill="#172a41" stroke="#457ca0"/>
+  <text x="84" y="450" class="label">Background daemon</text>
+  <text x="84" y="478" class="mono">reminder-watch.service</text>
+  <text x="84" y="507" class="body">Poll pending occurrences: 10s</text>
+  <text x="84" y="534" class="body">Acknowledge after display</text>
+  <text x="84" y="566" fill="#8fdbff" font-size="14">Starts at login · restarts on failure</text>
 
-  <!-- nginx strip -->
-  <rect x="286" y="132" width="428" height="40" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.25"/>
-  <text x="500" y="157" text-anchor="middle" font-size="13" fill="#334155">nginx / caddy — TLS termination (HTTPS, Let's Encrypt)</text>
+  <path d="M200 590V635" class="wire" stroke="#6bc9fa" marker-end="url(#blue)"/>
+  <rect x="64" y="640" width="272" height="89" rx="12" fill="#102f3c" stroke="#326475"/>
+  <text x="84" y="671" class="label">Desktop notification</text>
+  <text x="84" y="701" class="mono" font-size="13">omarchy-notification-send</text>
+  <text x="64" y="762" class="small">No terminal or manual watch required</text>
 
-  <!-- reminder serve box -->
-  <rect x="286" y="190" width="428" height="190" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
-  <text x="500" y="212" text-anchor="middle" font-size="13" font-weight="700" fill="#3730a3">reminder serve  (single Rust process)</text>
+  <!-- Cloud: one service and one database. -->
+  <rect x="430" y="170" width="550" height="620" rx="20" fill="url(#cloud)" stroke="#54577f"/>
+  <text x="454" y="207" class="eyebrow" fill="#b3a8fa">02 / ORACLE CLOUD</text>
+  <text x="454" y="239" class="heading">Canonical Ubuntu 22.04</text>
+  <text x="454" y="265" class="body">VM.Standard.E2.1.Micro · x86_64</text>
+  <rect x="454" y="291" width="502" height="58" rx="12" fill="#242c48" stroke="#565e85"/>
+  <text x="474" y="316" class="label">HTTPS reverse proxy</text>
+  <text x="474" y="338" class="small">TLS termination → HTTP on 127.0.0.1:8080</text>
 
-  <!-- 3 lanes inside reminder serve -->
-  <rect x="304" y="226" width="122" height="132" rx="8" fill="#ffffff" stroke="#a5b4fc" stroke-width="1.25"/>
-  <text x="365" y="248" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3730a3">HTTP API</text>
-  <text x="365" y="266" text-anchor="middle" font-size="10" fill="#475569">axum</text>
-  <text x="365" y="282" text-anchor="middle" font-size="10" fill="#475569">bearer-token auth</text>
-  <text x="365" y="298" text-anchor="middle" font-size="10" fill="#475569">CRUD + complete</text>
-  <text x="365" y="314" text-anchor="middle" font-size="10" fill="#475569">/occurrences/*</text>
+  <rect x="446" y="384" width="518" height="222" rx="14" fill="#151d35" stroke="#424c76"/>
+  <text x="464" y="413" class="label">reminder serve</text>
+  <text x="944" y="413" text-anchor="end" class="small">systemd · reminder.service</text>
 
-  <rect x="438" y="226" width="122" height="132" rx="8" fill="#ffffff" stroke="#a5b4fc" stroke-width="1.25"/>
-  <text x="499" y="248" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3730a3">Scheduler</text>
-  <text x="499" y="266" text-anchor="middle" font-size="10" fill="#475569">tick every 30s</text>
-  <text x="499" y="282" text-anchor="middle" font-size="10" fill="#475569">pure is_due() check</text>
-  <text x="499" y="298" text-anchor="middle" font-size="10" fill="#475569">DST-safe (chrono-tz)</text>
-  <text x="499" y="314" text-anchor="middle" font-size="10" fill="#475569">records occurrences</text>
+  <rect x="460" y="436" width="148" height="150" rx="10" fill="#222a47" stroke="#51577c"/>
+  <text x="476" y="465" class="label">HTTP API</text>
+  <text x="476" y="496" class="small">axum + auth</text>
+  <text x="476" y="521" class="small">Reminders</text>
+  <text x="476" y="546" class="small">Occurrences</text>
+  <text x="476" y="571" class="small">Delivery acks</text>
 
-  <rect x="572" y="226" width="122" height="132" rx="8" fill="#ffffff" stroke="#a5b4fc" stroke-width="1.25"/>
-  <text x="633" y="248" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3730a3">Notify loop</text>
-  <text x="633" y="266" text-anchor="middle" font-size="10" fill="#475569">retry every 30s</text>
-  <text x="633" y="282" text-anchor="middle" font-size="10" fill="#475569">pushes via ntfy</text>
-  <text x="633" y="298" text-anchor="middle" font-size="10" fill="#475569">independent of fire</text>
-  <text x="633" y="314" text-anchor="middle" font-size="10" fill="#475569">capped retries</text>
+  <rect x="626" y="436" width="148" height="150" rx="10" fill="#222a47" stroke="#51577c"/>
+  <text x="642" y="465" class="label">Scheduler</text>
+  <text x="642" y="496" fill="#c4b8ff" font-size="16">Every 30s</text>
+  <text x="642" y="521" class="small">Check due time</text>
+  <text x="642" y="546" class="small">Record once</text>
+  <text x="642" y="571" class="small">per date</text>
 
-  <!-- SQLite -->
-  <rect x="286" y="404" width="428" height="56" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
-  <text x="500" y="427" text-anchor="middle" font-size="12.5" font-weight="700" fill="#065f46">SQLite  (single file, WAL mode)</text>
-  <text x="500" y="444" text-anchor="middle" font-size="10.5" fill="#047857">reminders · occurrences — the one source of truth</text>
+  <rect x="792" y="436" width="148" height="150" rx="10" fill="#2c2838" stroke="#74604c"/>
+  <text x="808" y="465" class="label">Push worker</text>
+  <text x="808" y="496" fill="#f6bf69" font-size="16">Every 30s</text>
+  <text x="808" y="521" class="small">ntfy priority: high</text>
+  <text x="808" y="546" class="small">Retry failures</text>
+  <text x="808" y="571" class="small">10 attempts max</text>
 
-  <!-- connectors: 3 lanes -> sqlite -->
-  <line x1="365" y1="358" x2="365" y2="404" stroke="#94a3b8" stroke-width="1.25" marker-end="url(#arrow)"/>
-  <line x1="499" y1="358" x2="499" y2="404" stroke="#94a3b8" stroke-width="1.25" marker-end="url(#arrow)"/>
-  <line x1="633" y1="358" x2="633" y2="404" stroke="#94a3b8" stroke-width="1.25" marker-end="url(#arrow)"/>
+  <path d="M534 349V384" class="wire" stroke="#6bc9fa" marker-end="url(#blue)"/>
+  <path d="M534 586V650" class="wire" stroke="#60cbb5" marker-start="url(#mint)" marker-end="url(#mint)"/>
+<path d="M700 586V650" class="wire" stroke="#60cbb5" marker-start="url(#mint)" marker-end="url(#mint)"/>
+<path d="M866 586V650" class="wire" stroke="#60cbb5" marker-start="url(#mint)" marker-end="url(#mint)"/>
+  <rect x="454" y="650" width="502" height="79" rx="12" fill="#12302f" stroke="#36665c"/>
+  <text x="474" y="681" class="label">SQLite · WAL mode</text>
+  <text x="474" y="708" fill="#a0d5c8" font-size="16">Reminders + occurrences + delivery status</text>
+  <text x="454" y="762" class="small">Timezone: Asia/Kolkata (IST) · one source of truth</text>
 
-  <!-- nginx -> API -->
-  <line x1="500" y1="172" x2="500" y2="190" stroke="#94a3b8" stroke-width="1.25" marker-end="url(#arrow)"/>
+  <!-- Transport arrows: requests are initiated by the laptop. -->
+  <path d="M336 311H454" class="wire" stroke="#6bc9fa" marker-end="url(#blue)" marker-start="url(#blue)"/>
+  <path d="M336 503H392V334H454" class="wire" stroke="#6bc9fa" stroke-dasharray="5 5" marker-end="url(#blue)"/>
 
-  <text x="500" y="490" text-anchor="middle" font-size="10.5" fill="#64748b">Your laptop being off, or ntfy being down, changes nothing here.</text>
+  <!-- Phone delivery travels from the server through ntfy to Android. -->
+  <text x="1050" y="207" class="eyebrow" fill="#f6bf69">03 / PHONE</text>
+  <text x="1050" y="240" class="heading">Push delivery</text>
+  <text x="1050" y="276" class="body">Independent of the laptop.</text>
+  <text x="1050" y="301" class="body">The server keeps scheduling</text>
+  <text x="1050" y="326" class="body">while your desktop is offline.</text>
 
-  <!-- ===================== Phone (left) ===================== -->
-  <rect x="30" y="180" width="150" height="90" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="105" y="208" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e">Phone</text>
-  <text x="105" y="228" text-anchor="middle" font-size="10.5" fill="#92400e">ntfy app</text>
-  <text x="105" y="244" text-anchor="middle" font-size="10.5" fill="#92400e">subscribed to</text>
-  <text x="105" y="258" text-anchor="middle" font-size="10.5" fill="#92400e">your private topic</text>
+  <rect x="1050" y="436" width="310" height="150" rx="16" fill="#2a2530" stroke="#77604a"/>
+  <text x="1074" y="475" class="heading">ntfy.sh</text>
+  <text x="1074" y="507" fill="#f6bf69" font-size="16">Priority: high (4)</text>
+  <text x="1074" y="538" class="body">Publish to the configured topic</text>
+  <text x="1074" y="565" class="small">Accepted messages forwarded to app</text>
+  <path d="M940 493H1050" class="wire" stroke="#f6bf69" marker-end="url(#amber)"/>
+  <text x="995" y="480" text-anchor="middle" fill="#f6bf69" font-size="13">POST</text>
+  <path d="M1205 586V635" class="wire" stroke="#f6bf69" marker-end="url(#amber)"/>
 
-  <rect x="30" y="290" width="150" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.25"/>
-  <text x="105" y="315" text-anchor="middle" font-size="11" fill="#92400e">ntfy.sh (or self-hosted)</text>
+  <rect x="1050" y="640" width="310" height="150" rx="16" fill="#2a2530" stroke="#77604a"/>
+  <text x="1074" y="677" class="heading">Redmi 12 5G</text>
+  <text x="1074" y="708" class="body">ntfy Android app</text>
+  <text x="1074" y="738" fill="#f6bf69" font-size="16">Sound + notification alert</text>
+  <text x="1074" y="766" class="small">Subject to Android channel settings</text>
 
-  <line x1="105" y1="270" x2="105" y2="290" stroke="#b45309" stroke-width="1.25" marker-end="url(#arrow)"/>
-  <path d="M180,308 C220,308 240,290 260,270" fill="none" stroke="#b45309" stroke-width="1.25" marker-end="url(#arrow)"/>
-  <text x="215" y="292" text-anchor="middle" font-size="10" fill="#92400e">push</text>
-
-  <!-- ===================== Laptop (right) ===================== -->
-  <rect x="820" y="150" width="150" height="180" rx="10" fill="#eff6ff" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="895" y="176" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">Laptop / desktop</text>
-
-  <rect x="836" y="190" width="118" height="26" rx="6" fill="#ffffff" stroke="#7dd3fc" stroke-width="1"/>
-  <text x="895" y="207" text-anchor="middle" font-size="10.5" fill="#0c4a6e">reminder CLI</text>
-
-  <rect x="836" y="222" width="118" height="26" rx="6" fill="#ffffff" stroke="#7dd3fc" stroke-width="1"/>
-  <text x="895" y="239" text-anchor="middle" font-size="10.5" fill="#0c4a6e">reminder tui</text>
-
-  <rect x="836" y="254" width="118" height="26" rx="6" fill="#ffffff" stroke="#7dd3fc" stroke-width="1"/>
-  <text x="895" y="271" text-anchor="middle" font-size="10.5" fill="#0c4a6e">reminder watch</text>
-
-  <rect x="836" y="292" width="118" height="30" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.25"/>
-  <text x="895" y="311" text-anchor="middle" font-size="10.5" fill="#075985">omarchy reminder</text>
-
-  <line x1="895" y1="280" x2="895" y2="292" stroke="#0284c7" stroke-width="1.25" marker-end="url(#arrow)"/>
-  <text x="925" y="288" font-size="9.5" fill="#075985">local only</text>
-
-  <!-- laptop <-> nginx, bidirectional HTTPS -->
-  <line x1="820" y1="220" x2="716" y2="152" stroke="#475569" stroke-width="1.25" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
-  <text x="770" y="172" text-anchor="middle" font-size="10" fill="#334155">HTTPS + bearer token</text>
-  <text x="770" y="186" text-anchor="middle" font-size="9.5" fill="#64748b">(reqwest / TUI / watch poll)</text>
-
-  <!-- legend -->
-  <g transform="translate(30,410)">
-    <rect x="0" y="0" width="14" height="14" rx="3" fill="#eef2ff" stroke="#6366f1"/>
-    <text x="20" y="11" font-size="10.5" fill="#334155">compute (Rust)</text>
-    <rect x="0" y="24" width="14" height="14" rx="3" fill="#ecfdf5" stroke="#10b981"/>
-    <text x="20" y="35" font-size="10.5" fill="#334155">storage</text>
-    <rect x="0" y="48" width="14" height="14" rx="3" fill="#fffbeb" stroke="#f59e0b"/>
-    <text x="20" y="59" font-size="10.5" fill="#334155">push path (phone)</text>
-    <rect x="0" y="72" width="14" height="14" rx="3" fill="#eff6ff" stroke="#38bdf8"/>
-    <text x="20" y="83" font-size="10.5" fill="#334155">pull path (laptop)</text>
-  </g>
-
-  <text x="500" y="600" text-anchor="middle" font-size="10" fill="#94a3b8">Phase 5 (server) + Phase 4 (ntfy) + Phase 8 (laptop watch) shown together — see README for details</text>
+  <!-- Operational guarantees, not another processing stage. -->
+  <path d="M40 826H1360" stroke="#29374e"/>
+  <circle cx="48" cy="857" r="4" fill="#b3a8fa"/>
+  <text x="64" y="863" class="label">Schedule once</text>
+  <text x="64" y="892" class="small">Server resolves date, time, and repeat days.</text>
+  <circle cx="500" cy="857" r="4" fill="#6bc9fa"/>
+  <text x="516" y="863" class="label">Catch up on reconnect</text>
+  <text x="516" y="892" class="small">Recorded desktop occurrences wait for delivery.</text>
+  <circle cx="1020" cy="857" r="4" fill="#60cbb5"/>
+  <text x="1036" y="863" class="label">Automatic startup</text>
+  <text x="1036" y="892" class="small">VM boot + desktop graphical login.</text>
 </svg>

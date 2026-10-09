@@ -6,8 +6,8 @@ last section from your laptop.
 ## 1. Create the VM
 
 Oracle Cloud console → Compute → Instances → Create instance:
-- Image: **Ubuntu 24.04**
-- Shape: **Ampere A1 (ARM)**, Always Free eligible
+- Image: **Canonical Ubuntu 22.04**
+- Shape: **VM.Standard.E2.1.Micro** (x86_64), as used by the current deployment
 - Save the generated SSH key pair, note the public IP
 
 ## 2. Lock down SSH and the firewall
