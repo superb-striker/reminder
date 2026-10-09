@@ -1,0 +1,44 @@
+[package]
+name = "reminder"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "reminder"
+path = "src/main.rs"
+
+[dependencies]
+rusqlite = { version = "0.31", features = ["bundled"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "process"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+chrono-tz = "0.9"
+anyhow = "1"
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+axum = "0.7"
+
+# Toolchain note: pinned below to older releases because this sandbox's
+# apt-installed Rust (1.75) predates the `edition2024` feature that
+# newer point releases of these transitive deps require. A build on a
+# current rustup toolchain (1.85+) can drop these and `cargo update`.
+hyper-util = "=0.1.10"
+reqwest = { version = "0.12", default-features = false, features = ["json", "native-tls"] }
+clap = { version = "4", features = ["derive"] }
+idna = "=0.5.0"
+url = "=2.5.0"
+zeroize = "=1.7.0"
+clap_lex = "=0.7.4"
+clap_builder = "=4.5.57"
+openssl-sys = "=0.9.114"
+native-tls = "=0.2.13"
+ratatui = "0.28"
+crossterm = "0.28"
+unicode-segmentation = "=1.12.0"
+darling = "=0.20.10"
+darling_core = "=0.20.10"
+darling_macro = "=0.20.10"
+instability = "=0.3.10"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "process"] }

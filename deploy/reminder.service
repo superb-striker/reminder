@@ -1,0 +1,24 @@
+[Unit]
+Description=reminder server
+After=network.target
+
+[Service]
+Type=simple
+User=reminder
+Group=reminder
+WorkingDirectory=/opt/reminder
+EnvironmentFile=/opt/reminder/reminder.env
+ExecStart=/opt/reminder/reminder serve
+Restart=on-failure
+RestartSec=5
+
+# Hardening -- the service only needs to read/write its own directory
+# and talk on the loopback interface (Caddy handles the public side).
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/reminder
+PrivateTmp=true
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
