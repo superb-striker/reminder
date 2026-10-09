@@ -21,7 +21,10 @@ impl NtfyBackend {
     /// doesn't use one.
     pub fn new(server: String, topic: String, token: Option<String>) -> Self {
         NtfyBackend {
-            http: reqwest::Client::new(),
+            http: reqwest::Client::builder()
+                .connect_timeout(std::time::Duration::from_secs(10))
+                .timeout(std::time::Duration::from_secs(30))
+                .build().expect("HTTP client initialization failed"),
             server: server.trim_end_matches('/').to_string(),
             topic,
             token,
@@ -39,7 +42,8 @@ impl NotificationBackend for NtfyBackend {
         // otherwise make the whole request fail to build. Falling
         // back to putting the title in the body instead degrades
         // gracefully rather than losing the notification entirely.
-        let mut req = self.http.post(&url);
+        // High priority requests sound/vibration and a heads-up alert on Android.
+        let mut req = self.http.post(&url).header("Priority", "high");
         req = if title.is_ascii() {
             req.header("Title", title).body(body.to_string())
         } else {
@@ -105,6 +109,7 @@ mod tests {
         let (headers, body) = captured.0.lock().unwrap().take().unwrap();
         assert_eq!(headers.get("Title").unwrap(), "Study Go");
         assert_eq!(body, "It's time!");
+        assert_eq!(headers.get("Priority").unwrap(), "high");
         assert!(headers.get("Authorization").is_none());
     }
 
