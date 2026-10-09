@@ -24,7 +24,10 @@ impl ApiClient {
         // never produces a double slash.
         let base_url = base_url.trim_end_matches('/').to_string();
         ApiClient {
-            http: reqwest::Client::new(),
+            http: reqwest::Client::builder()
+                .connect_timeout(std::time::Duration::from_secs(10))
+                .timeout(std::time::Duration::from_secs(30))
+                .build().expect("HTTP client initialization failed"),
             base_url,
             token,
         }
