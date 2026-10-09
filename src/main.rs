@@ -57,11 +57,11 @@ enum Command {
     Tui,
 
     /// Poll for reminders that fired and show them locally via
-    /// `omarchy reminder`. Run this on your laptop/desktop; it does
+    /// Omarchy notifications. Run this on your laptop/desktop; it does
     /// nothing on the server itself.
     Watch {
         /// Seconds between polls.
-        #[arg(long, default_value_t = 30)]
+        #[arg(long, default_value_t = 10, value_parser = clap::value_parser!(u64).range(1..))]
         interval: u64,
     },
 
@@ -172,8 +172,7 @@ async fn run(cli: Cli) -> anyhow::Result<()> {
         }
         Command::Watch { interval } => {
             let client = api_client()?;
-            let omarchy_cmd =
-                std::env::var("REMINDER_OMARCHY_CMD").unwrap_or_else(|_| "omarchy".to_string());
+            let omarchy_cmd = std::env::var("REMINDER_OMARCHY_CMD").ok();
             let notifier = client::watch::OmarchyNotifier::new(omarchy_cmd);
             client::watch::run(client, notifier, interval).await
         }
